@@ -30,7 +30,7 @@ def mlflow_setup():
     mlflow.set_experiment(mlflow_experiment_name)
 
 
-mlflow.setup()
+mlflow_setup()
 
 # Create the TitanicTransformer class, for cleaning up the passenger data
 
