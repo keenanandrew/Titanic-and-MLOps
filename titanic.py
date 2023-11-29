@@ -15,7 +15,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 train_path = "data/train.csv"
 holdout_path = "data/test.csv"
 mlflow_uri = "http://127.0.0.1:8888"
-mlflow_experiment_name = "Experiment #X"
+mlflow_experiment_name = "Titanic sandbox"
 
 # This df will be used for training and testing the model
 train = pd.read_csv(train_path)
