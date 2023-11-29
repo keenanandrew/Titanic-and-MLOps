@@ -6,6 +6,7 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import seaborn as sns # for visualisations during the data exploration stage
 import matplotlib.pyplot as plt # another option for plots
 import opendatasets as od # if needed for grabbing datasets
+from datetime import datetime
 
 # preprocessing and analysis imports
 
@@ -24,16 +25,23 @@ from mlflow.models import infer_signature
 
 # Import the data
 
-fake_number = 5
+train_path = 'data/train.csv'
+holdout_path = 'data/test.csv'
+mlflow_uri = "http://127.0.0.1:8888"
+mlflow_experiment_name = 'Experiment #X'
 
 # This df will be used for training and testing the model
-train = pd.read_csv('data/train.csv')
+train = pd.read_csv(train_path)
 
 # This df is held aside for predicting and submitting to the competition
-holdout = pd.read_csv('data/test.csv')
+holdout = pd.read_csv(holdout_path)
 
 # Set our tracking server uri for logging
-mlflow.set_tracking_uri(uri="http://127.0.0.1:8888")
+def mlflow_setup:
+    mlflow.set_tracking_uri(uri=mlflow_uri)
+    mlflow.set_experiment(mlflow_experiment_name)
+
+mlflow.setup()
 
 # Create the TitanicTransformer class, for cleaning up the passenger data
 
@@ -84,8 +92,6 @@ y = train_transformed['Survived']
 X_train, X_test, y_train, y_test = train_test_split(X, y, train_size = 0.8, random_state=42)
 
 # Set parameters for MLFlow
-
-mlflow.set_experiment("MLflow Quickstart")
 
 params = {
     "solver": "lbfgs",
