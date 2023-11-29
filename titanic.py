@@ -137,7 +137,7 @@ predictions = loaded_model.predict(X_test)
 
 feature_names = X.columns
 
-result = pd.DataFrame(X_test, columns=feature_names)
+result = pd.DataFrame(X_test, columns = feature_names)
 result["actual_class"] = y_test
 result["predicted_class"] = predictions
 
