@@ -129,7 +129,7 @@ with mlflow.start_run():
     )
 print(model.coef_)
 
-loaded_model=mlflow.pyfunc.load_model(model_info.model_uri)
+loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
 
 predictions = loaded_model.predict(X_test)
 
