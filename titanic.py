@@ -24,6 +24,8 @@ from mlflow.models import infer_signature
 
 # Import the data
 
+fake_number = 5
+
 # This df will be used for training and testing the model
 train = pd.read_csv('data/train.csv')
 
