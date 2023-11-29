@@ -6,4 +6,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: psf/black@stable  
+      - uses: psf/black@stable
+      - uses: isort/isort-action@v1  
