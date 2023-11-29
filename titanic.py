@@ -1,22 +1,16 @@
 # A script for the Titanic dataset
 # For practicing mlflow, optuna and other MLOps libraries
 
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
-import seaborn as sns # for visualisations during the data exploration stage
-import matplotlib.pyplot as plt # another option for plots
-import opendatasets as od # if needed for grabbing datasets
-from datetime import datetime
+import pandas as pd
 
 # preprocessing and analysis imports
 
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, FunctionTransformer, LabelEncoder
-from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+# from sklearn.pipeline import Pipeline
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report, precision_score, recall_score, \
-                            confusion_matrix, precision_recall_curve, roc_curve, auc, log_loss, f1_score 
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 # mlflow imports
 
