@@ -30,9 +30,11 @@ def mlflow_setup():
     mlflow.set_tracking_uri(uri=mlflow_uri)
     mlflow.set_experiment(mlflow_experiment_name)
 
+
 mlflow.setup()
 
 # Create the TitanicTransformer class, for cleaning up the passenger data
+
 
 class TitanicTransformer(BaseEstimator, TransformerMixin):
     def __init__(self, columns=None):
