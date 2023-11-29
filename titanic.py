@@ -37,7 +37,7 @@ train = pd.read_csv(train_path)
 holdout = pd.read_csv(holdout_path)
 
 # Set our tracking server uri for logging
-def mlflow_setup:
+def mlflow_setup():
     mlflow.set_tracking_uri(uri=mlflow_uri)
     mlflow.set_experiment(mlflow_experiment_name)
 
