@@ -2,13 +2,15 @@
 
 # https://www.freecodecamp.org/news/hyperparameter-optimization-techniques-machine-learning/
 
-from functools import \
-    partial  # to solve scoping problem when supplying more params' to objective function
+from functools import (
+    partial,
+)  # to solve scoping problem when supplying more params' to objective function
 
 # Optuna
 import optuna
 from optuna.samplers import TPESampler
 from sklearn import datasets
+
 # sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
