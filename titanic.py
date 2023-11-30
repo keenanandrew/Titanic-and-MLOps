@@ -100,11 +100,14 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
 accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+f1 = f1_score(y_test, y_pred)
 
-print("Accuracy score is: " + str(accuracy_score(y_test, y_pred)))
-print("Precision score is: " + str(precision_score(y_test, y_pred)))
-print("Recall score is: " + str(recall_score(y_test, y_pred)))
-print("f1 score is: " + str(f1_score(y_test, y_pred)))
+print("Accuracy:", accuracy)
+print("Precision:", precision)
+print("Recall:", recall)
+print("F1 Score:", f1)
 
 with mlflow.start_run():
     # Log the hyperparameters
