@@ -5,6 +5,10 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: psf/black@stable
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Lint with Black
+        run: black .
+      - name: Check linting
+        uses: psf/black@stable
 
