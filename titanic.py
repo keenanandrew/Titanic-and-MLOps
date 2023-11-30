@@ -4,17 +4,19 @@
 import mlflow
 import pandas as pd
 from mlflow.models import infer_signature
-from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from sklearn.metrics import (accuracy_score, f1_score, precision_score,
+                             recall_score)
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+
+
+from titanic_transformer import TitanicTransformer
 
 # Import the data
 
 train_path = "data/train.csv"
 holdout_path = "data/test.csv"
-mlflow_uri = "http://127.0.0.1:8888"
+mlflow_uri = "http://127.0.0.1:8880"
 mlflow_experiment_name = "Titanic sandbox"
 
 # This df will be used for training and testing the model
@@ -31,44 +33,6 @@ def mlflow_setup():
 
 
 mlflow_setup()
-
-# Create the TitanicTransformer class, for cleaning up the passenger data
-
-
-class TitanicTransformer(BaseEstimator, TransformerMixin):
-    def __init__(self, columns=None):
-        self.scaler = StandardScaler()
-
-    def fit(self, X, y=None):
-        return self
-
-    def transform(self, X):
-        # drop unnecessary columns
-        not_needed = ["PassengerId", "Name", "Cabin", "Age", "Ticket"]
-        X = X.drop(not_needed, axis=1)
-
-        # forward-fill missing embarcation data
-        X["Embarked"] = X["Embarked"].ffill()
-
-        # one-hot-encode embarcation data
-        dummies = pd.get_dummies(X["Embarked"])
-        X = X.join(dummies)
-        X = X.drop(["Embarked"], axis=1)
-
-        # encode sex as binary
-        sex_encoder = LabelEncoder()
-        X["Sex"] = sex_encoder.fit_transform(X["Sex"])
-
-        # drop rows with null values
-        X = X.dropna()
-
-        # scale numeric cols
-        numeric_cols = ["Pclass", "SibSp", "Parch", "Fare"]
-        self.scaler.fit(X[numeric_cols])
-        X[numeric_cols] = self.scaler.transform(X[numeric_cols])
-
-        return X
-
 
 transformer = TitanicTransformer()
 

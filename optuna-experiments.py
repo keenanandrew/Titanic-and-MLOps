@@ -2,36 +2,37 @@
 
 # https://www.freecodecamp.org/news/hyperparameter-optimization-techniques-machine-learning/
 
+from functools import \
+    partial  # to solve scoping problem when supplying more params' to objective function
+
 # Optuna
 import optuna
 from optuna.samplers import TPESampler
-
+from sklearn import datasets
 # sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
-from sklearn import datasets
-
-from functools import partial # to solve scoping problem when supplying more params' to objective function
-
 
 
 def objective(trial, n_folds, X, y):
     """Objective function for tuning logistic regression hyperparameters"""
-    
+
     # in Optuna, the search space is inside the function definition
     # Why is that better?
-    
+
     params = {
-        'warm_start': trial.suggest_categorical('warm_start', [True, False]),
-        'fit_intercept': trial.suggest_categorical('fit_intercept', [True, False]),
-        'tol': trial.suggest_float('tol', 0.00001, 0.0001),
-        'C': trial.suggest_float('C', 0.05, 2.5),
-        'solver': trial.suggest_categorical('solver', ['newton-cg', 'lbfgs', 'liblinear']),
-        'max_iter': trial.suggest_categorical('max_iter', range(10, 500))
+        "warm_start": trial.suggest_categorical("warm_start", [True, False]),
+        "fit_intercept": trial.suggest_categorical("fit_intercept", [True, False]),
+        "tol": trial.suggest_float("tol", 0.00001, 0.0001),
+        "C": trial.suggest_float("C", 0.05, 2.5),
+        "solver": trial.suggest_categorical(
+            "solver", ["newton-cg", "lbfgs", "liblinear"]
+        ),
+        "max_iter": trial.suggest_categorical("max_iter", range(10, 500)),
     }
     # Perform n_fold cross validation with hyperparameters
     clf = LogisticRegression(**params, random_state=42)
-    scores = cross_val_score(clf, X, y, cv=n_folds, scoring='f1_macro')
+    scores = cross_val_score(clf, X, y, cv=n_folds, scoring="f1_macro")
 
     # Extract the best score
     max_score = max(scores)
@@ -45,8 +46,9 @@ def objective(trial, n_folds, X, y):
 
 if __name__ == "__main__":
     n_folds = 5
-    X, y = datasets.make_classification(n_samples=100000, n_features=20,
-                                    n_informative=2, n_redundant=2)
+    X, y = datasets.make_classification(
+        n_samples=100000, n_features=20, n_informative=2, n_redundant=2
+    )
 
     train_samples = 100  # Samples used for training the models
 
@@ -60,9 +62,9 @@ if __name__ == "__main__":
 
     from optuna.samplers import TPESampler
 
-    study = optuna.create_study(direction='minimize', sampler = TPESampler())
-    study.optimize(partial(objective, n_folds=n_folds, X=X_train, y=y_train), n_trials=16)
-
+    study = optuna.create_study(direction="minimize", sampler=TPESampler())
+    study.optimize(
+        partial(objective, n_folds=n_folds, X=X_train, y=y_train), n_trials=16
+    )
 
     print(study.best_trial.params)
-
