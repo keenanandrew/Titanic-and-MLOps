@@ -21,7 +21,15 @@ In addition, these models should be:
 
 ### Updates:
 
-- 4 Dec 2023: Added Jira integration
-- And also CI/CD logging... well, we'll see. 
+4 Dec 2023: 
+- Added Jira integration
+- Brought .gitignore up to standard
+- CI/CD results now visible in Jira 
 
 
+## Optuna
+
+The optuna-experiments.py file is an example from MLEWP, using a random number generator. 
+My goal is to take it apart, understand the key pieces, and understand how to implement Optuna in my titanic.py file.
+
+- Need to research the MLFlow / Optuna connector
