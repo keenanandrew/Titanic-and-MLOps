@@ -1,19 +1,21 @@
 # A script for the Titanic dataset
 # For practicing mlflow, optuna and other MLOps libraries
-from functools import \
-    partial  # to solve scoping problem when supplying more params' to objective function
+from functools import (
+    partial,
+)  # to solve scoping problem when supplying more params' to objective function
 
 import mlflow
+
 # Optuna
 import optuna
 import pandas as pd
 from mlflow.models import infer_signature
 from optuna.samplers import TPESampler
 from sklearn import datasets
+
 # sklearn
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import (accuracy_score, f1_score, precision_score,
-                             recall_score)
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from sklearn.model_selection import cross_val_score, train_test_split
 
 from titanic_transformer import TitanicTransformer
@@ -81,9 +83,6 @@ def objective(trial, n_folds, X, y):
 # ======== OPTUNA ENDS HERE=======
 
 
-
-
-
 # Split the train dataset, for testing models
 
 n_folds = 5
@@ -98,9 +97,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 from optuna.samplers import TPESampler
 
 study = optuna.create_study(direction="minimize", sampler=TPESampler())
-study.optimize(
-    partial(objective, n_folds=n_folds, X=X_train, y=y_train), n_trials=16
-)
+study.optimize(partial(objective, n_folds=n_folds, X=X_train, y=y_train), n_trials=16)
 
 print(study.best_trial.params)
 
