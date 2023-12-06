@@ -14,7 +14,7 @@ from titanic_transformer import TitanicTransformer
 
 train_path = "data/train.csv"
 holdout_path = "data/test.csv"
-mlflow_uri = "http://127.0.0.1:8880"
+mlflow_uri = "http://127.0.0.1:8080"
 mlflow_experiment_name = "Titanic sandbox"
 
 # This df will be used for training and testing the model
