@@ -88,16 +88,16 @@ with mlflow.start_run():
         input_example=X_train,
         registered_model_name="titanic_v_001",
     )
-print(model.coef_)
+# print(model.coef_)
 
-loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
+# loaded_model = mlflow.pyfunc.load_model(model_info.model_uri)
 
-predictions = loaded_model.predict(X_test)
+# predictions = loaded_model.predict(X_test)
 
-feature_names = X.columns
+# feature_names = X.columns
 
-result = pd.DataFrame(X_test, columns=feature_names)
-result["actual_class"] = y_test
-result["predicted_class"] = predictions
+# result = pd.DataFrame(X_test, columns=feature_names)
+# result["actual_class"] = y_test
+# result["predicted_class"] = predictions
 
-result[:20]
+# result[:20]
