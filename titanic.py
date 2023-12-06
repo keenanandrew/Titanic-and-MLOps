@@ -10,10 +10,11 @@ from mlflow.models import infer_signature
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from sklearn.model_selection import train_test_split
+from mlflow_setup import ml_flow_setup
 
 from titanic_transformer import TitanicTransformer
 
-# Import the data
+# Access the data and make it available as dataframes
 
 train_path = "data/train.csv"
 holdout_path = "data/test.csv"
@@ -21,31 +22,8 @@ holdout_path = "data/test.csv"
 train = pd.read_csv(train_path)
 holdout = pd.read_csv(holdout_path)
 
-# Set up MLFlow with key information
-mlflow_uri = "http://127.0.0.1:8080"
-mlflow_experiment_name = "Titanic II: The Iceberg Returns"
-experiment_description = "Another version of the Titanic prediction model"
-experiment_tags = {
-    "first_tag": "tag1",
-    "second_tag": "tag2",
-    "mlflow.note.content": experiment_description,
-}
-
-client = MlflowClient(tracking_uri=mlflow_uri)
-
-# Here we CREATE the experiment. This only needs run once, so it's commented out.
-# How is this done properly? An IF loop that checks whether the experiment already exists?
-# client.create_experiment(name = mlflow_experiment_name, tags = experiment_tags)
-
-
-# Set our tracking server uri for logging
-def mlflow_setup():
-    mlflow.set_tracking_uri(uri=mlflow_uri)
-    mlflow.set_experiment(mlflow_experiment_name)
-
-
-mlflow_setup()
-
+# get MLFlow going
+ml_flow_setup()
 
 transformer = TitanicTransformer()
 
@@ -65,7 +43,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 params = {
     "solver": "lbfgs",
-    "max_iter": 500,
+    "max_iter": 400,
     "multi_class": "auto",
     "random_state": 8888,
 }

@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1701878016272
+current_stage: None
+description: null
+last_updated_timestamp: 1701878016272
+name: titanic_v_001
+run_id: 398d9679cf56476799f01a1d649512c4
+run_link: null
+source: file:///home/keenanandrew/pipelineproject/titanic/mlruns/0/398d9679cf56476799f01a1d649512c4/artifacts/titanic_model
+status: READY
+status_message: null
+storage_location: file:///home/keenanandrew/pipelineproject/titanic/mlruns/0/398d9679cf56476799f01a1d649512c4/artifacts/titanic_model
+user_id: null
+version: 1
