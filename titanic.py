@@ -1,8 +1,11 @@
 # A script for the Titanic dataset
 # For practicing mlflow, optuna and other MLOps libraries
 
+from pprint import pprint
+
 import mlflow
 import pandas as pd
+from mlflow import MlflowClient
 from mlflow.models import infer_signature
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
@@ -14,14 +17,25 @@ from titanic_transformer import TitanicTransformer
 
 train_path = "data/train.csv"
 holdout_path = "data/test.csv"
-mlflow_uri = "http://127.0.0.1:8080"
-mlflow_experiment_name = "Titanic sandbox"
 
-# This df will be used for training and testing the model
 train = pd.read_csv(train_path)
-
-# This df is held aside for predicting and submitting to the competition
 holdout = pd.read_csv(holdout_path)
+
+# Set up MLFlow with key information
+mlflow_uri = "http://127.0.0.1:8080"
+mlflow_experiment_name = "Titanic II: The Iceberg Returns"
+experiment_description = "Another version of the Titanic prediction model"
+experiment_tags = {
+    "first_tag": "tag1",
+    "second_tag": "tag2",
+    "mlflow.note.content": experiment_description,
+}
+
+client = MlflowClient(tracking_uri=mlflow_uri)
+
+# Here we CREATE the experiment. This only needs run once, so it's commented out.
+# How is this done properly? An IF loop that checks whether the experiment already exists?
+# client.create_experiment(name = mlflow_experiment_name, tags = experiment_tags)
 
 
 # Set our tracking server uri for logging
@@ -31,6 +45,7 @@ def mlflow_setup():
 
 
 mlflow_setup()
+
 
 transformer = TitanicTransformer()
 
@@ -76,7 +91,10 @@ with mlflow.start_run():
     mlflow.log_params(params)
 
     # Log the loss metric
-    mlflow.log_metric("accuracy", accuracy)
+    mlflow.log_metric("Accuracy", accuracy)
+    mlflow.log_metric("Precision", precision)
+    mlflow.log_metric("Recall", recall)
+    mlflow.log_metric("F1 Score", f1)
 
     # Set a tag that we can use to remind ourselves what this run was for
     mlflow.set_tag("Training Info", "Basic LR model for Titanic data")
