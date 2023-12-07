@@ -83,10 +83,10 @@ with mlflow.start_run():
     # Log the model
     model_info = mlflow.sklearn.log_model(
         sk_model=model,
-        artifact_path="titanic_model",
+        artifact_path="mlruns",
         signature=signature,
         input_example=X_train,
-        registered_model_name="titanic_v_001",
+        registered_model_name="titanic_v_002",
     )
 # print(model.coef_)
 
